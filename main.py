@@ -4,6 +4,28 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from io import BytesIO
+import toml
+import os
+
+# ---------------- LOAD THEME CONFIG ----------------
+theme_path = os.path.join(os.getcwd(), "config.toml")  # expects config.toml in same folder as app.py
+if os.path.exists(theme_path):
+    theme = toml.load(theme_path)
+    colors = theme.get("theme", {})
+    st.markdown(
+        f"""
+        <style>
+        body {{
+            background-color: {colors.get('backgroundColor', '#FFFFFF')};
+            color: {colors.get('textColor', '#000000')};
+            font-family: {colors.get('font', 'sans-serif')};
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+else:
+    st.warning("⚠️ config.toml not found — using default Streamlit theme")
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(page_title="Smart Data Visualizer", page_icon="📊", layout="wide")
@@ -112,7 +134,6 @@ if uploaded_file:
 
 else:
     st.info("👆 Upload a CSV or Excel file to get started.")
-
 
 st.write("By : Manan Chawla ")
 st.write("Thanks for using Smart Data Visualizer tool ")
