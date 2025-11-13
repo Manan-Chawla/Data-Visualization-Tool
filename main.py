@@ -9,13 +9,14 @@ from io import BytesIO
 st.set_page_config(page_title="Smart Data Visualizer", page_icon="📊", layout="wide")
 
 # ---------------- CUSTOM CSS ----------------
+# ---------------- CUSTOM CSS ----------------
 st.markdown("""
     <style>
     /* ---------- Global App Styling ---------- */
     .stApp {
         background-color: #F1F8E9;
         font-family: 'Poppins', sans-serif;
-        color: #1B5E20;
+        color: orangered;
     }
 
     /* ---------- Sidebar ---------- */
@@ -25,15 +26,15 @@ st.markdown("""
     }
 
     /* ---------- Headings ---------- */
-    h1, h2, h3, h4 {
-        color: #00897B;
+    h1, h2, h3, h4 ,p{
+        color: blue;
         font-weight: 600;
     }
 
     /* ---------- Buttons ---------- */
     button[data-testid="baseButton-secondary"] {
         background-color: #00897B !important;
-        color: white !important;
+        color: blue !important;
         border-radius: 8px !important;
         border: none !important;
         font-weight: 600 !important;
@@ -44,10 +45,10 @@ st.markdown("""
 
     /* ---------- Download Button ---------- */
     div.stDownloadButton > button {
-        background-color: #00897B;
-        color: white;
+        background-color: white;
+        color: white !important;
         border-radius: 10px;
-        font-weight: 600;
+        font-weight: 100;
     }
     div.stDownloadButton > button:hover {
         background-color: #00796B;
@@ -62,19 +63,30 @@ st.markdown("""
     .streamlit-expanderHeader {
         background-color: #E8F5E9 !important;
         font-weight: 600;
-        color: #1B5E20 !important;
+        color: blue !important;
     }
 
     /* ---------- Metrics ---------- */
     [data-testid="stMetricValue"] {
-        color: #00897B;
+        color: blue;
         font-weight: 700;
     }
 
-    /* ---------- Select boxes ---------- */
+    /* ---------- Select Boxes ---------- */
     div[data-baseweb="select"] > div {
         background-color: #FFFFFF !important;
         border-radius: 8px !important;
+        color: #000000 !important;   /* Ensures black text */
+    }
+
+    /* Text inside dropdown menu */
+    div[data-baseweb="popover"] * {
+        color: #000000 !important;
+    }
+
+    /* Dropdown background */
+    div[data-baseweb="popover"] {
+        background-color: #FFFFFF !important;
     }
 
     /* ---------- Footer ---------- */
@@ -83,6 +95,7 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+
 
 # ---------------- SIDEBAR ----------------
 st.sidebar.title("⚙️ Controls")
