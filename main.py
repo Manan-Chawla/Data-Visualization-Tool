@@ -11,65 +11,73 @@ st.set_page_config(page_title="Smart Data Visualizer", page_icon="📊", layout=
 # ---------------- CUSTOM CSS ----------------
 st.markdown("""
     <style>
-    /* Global App Styling */
+    /* ---------- Global App Styling ---------- */
     .stApp {
-        background-color: #FFFFFF;
+        background-color: #F1F8E9;
         font-family: 'Poppins', sans-serif;
-        color: #262730;
+        color: #1B5E20;
     }
 
-    /* Sidebar Styling */
+    /* ---------- Sidebar ---------- */
     section[data-testid="stSidebar"] {
-        background-color: #F5F5F5;
-        border-right: 2px solid #E0E0E0;
+        background-color: #C8E6C9;
+        border-right: 2px solid #A5D6A7;
     }
 
-    /* Headers */
+    /* ---------- Headings ---------- */
     h1, h2, h3, h4 {
-        color: #FF4B4B;
+        color: #00897B;
         font-weight: 600;
     }
 
-    /* Buttons */
+    /* ---------- Buttons ---------- */
     button[data-testid="baseButton-secondary"] {
-        background-color: #FF4B4B !important;
+        background-color: #00897B !important;
         color: white !important;
         border-radius: 8px !important;
         border: none !important;
+        font-weight: 600 !important;
     }
     button[data-testid="baseButton-secondary"]:hover {
-        background-color: #E04343 !important;
+        background-color: #00796B !important;
     }
 
-    /* Download Button */
+    /* ---------- Download Button ---------- */
     div.stDownloadButton > button {
-        background-color: #FF4B4B;
+        background-color: #00897B;
         color: white;
         border-radius: 10px;
         font-weight: 600;
     }
     div.stDownloadButton > button:hover {
-        background-color: #E04343;
+        background-color: #00796B;
     }
 
-    /* Dataframes */
+    /* ---------- Dataframes ---------- */
     .stDataFrame {
         border-radius: 10px !important;
     }
 
-    /* Expander */
+    /* ---------- Expander ---------- */
     .streamlit-expanderHeader {
-        background-color: #fafafa !important;
+        background-color: #E8F5E9 !important;
         font-weight: 600;
+        color: #1B5E20 !important;
     }
 
-    /* Metrics */
+    /* ---------- Metrics ---------- */
     [data-testid="stMetricValue"] {
-        color: #FF4B4B;
+        color: #00897B;
         font-weight: 700;
     }
 
-    /* Footer */
+    /* ---------- Select boxes ---------- */
+    div[data-baseweb="select"] > div {
+        background-color: #FFFFFF !important;
+        border-radius: 8px !important;
+    }
+
+    /* ---------- Footer ---------- */
     footer {
         visibility: hidden;
     }
@@ -127,33 +135,33 @@ if uploaded_file:
     )
 
     fig, ax = plt.subplots(figsize=(8, 5))
-    plt.style.use("seaborn-v0_8-darkgrid")
+    plt.style.use("seaborn-v0_8-whitegrid")
 
     if chart_type == "Scatter Plot":
         x = st.selectbox("X-axis", numeric_cols)
         y = st.selectbox("Y-axis", numeric_cols)
-        sns.scatterplot(data=df, x=x, y=y, ax=ax, color="#FF4B4B")
+        sns.scatterplot(data=df, x=x, y=y, ax=ax, color="#00897B")
 
     elif chart_type == "Line Chart":
         x = st.selectbox("X-axis", all_cols)
         y = st.selectbox("Y-axis", numeric_cols)
-        sns.lineplot(data=df, x=x, y=y, ax=ax, color="#FF4B4B")
+        sns.lineplot(data=df, x=x, y=y, ax=ax, color="#00897B")
 
     elif chart_type == "Histogram":
         column = st.selectbox("Select Column", numeric_cols)
-        sns.histplot(df[column], kde=True, ax=ax, color="#FF4B4B")
+        sns.histplot(df[column], kde=True, ax=ax, color="#00897B")
 
     elif chart_type == "Box Plot":
         column = st.selectbox("Select Column", numeric_cols)
-        sns.boxplot(data=df, y=column, ax=ax, color="#FF4B4B")
+        sns.boxplot(data=df, y=column, ax=ax, color="#00897B")
 
     elif chart_type == "Count Plot":
         column = st.selectbox("Select Column", all_cols)
-        sns.countplot(data=df, x=column, ax=ax, color="#FF4B4B")
+        sns.countplot(data=df, x=column, ax=ax, color="#00897B")
         plt.xticks(rotation=45)
 
     elif chart_type == "Correlation Heatmap":
-        sns.heatmap(df.corr(), annot=True, cmap="coolwarm", ax=ax)
+        sns.heatmap(df.corr(), annot=True, cmap="Greens", ax=ax)
 
     st.pyplot(fig)
 
@@ -181,9 +189,10 @@ if uploaded_file:
 else:
     st.info("👆 Upload a CSV or Excel file to get started.")
 
+# ---------------- FOOTER ----------------
 st.markdown("""
 ---
-<p style='text-align:center; color:#FF4B4B; font-weight:600;'>
-Made with ❤️ by <b>Manan Chawla</b> <br> Smart Data Visualizer v2.0
+<p style='text-align:center; color:#00897B; font-weight:600;'>
+Made with 🌿 by <b>Manan Chawla</b> <br> Smart Data Visualizer v2.0
 </p>
 """, unsafe_allow_html=True)
