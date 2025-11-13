@@ -4,31 +4,77 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from io import BytesIO
-import toml
-import os
-
-# ---------------- LOAD THEME CONFIG ----------------
-theme_path = os.path.join(os.getcwd(), "config.toml")  # expects config.toml in same folder as app.py
-if os.path.exists(theme_path):
-    theme = toml.load(theme_path)
-    colors = theme.get("theme", {})
-    st.markdown(
-        f"""
-        <style>
-        body {{
-            background-color: {colors.get('backgroundColor', '#FFFFFF')};
-            color: {colors.get('textColor', '#000000')};
-            font-family: {colors.get('font', 'sans-serif')};
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-else:
-    st.warning("⚠️ config.toml not found — using default Streamlit theme")
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(page_title="Smart Data Visualizer", page_icon="📊", layout="wide")
+
+# ---------------- CUSTOM CSS ----------------
+st.markdown("""
+    <style>
+    /* Global App Styling */
+    .stApp {
+        background-color: #FFFFFF;
+        font-family: 'Poppins', sans-serif;
+        color: #262730;
+    }
+
+    /* Sidebar Styling */
+    section[data-testid="stSidebar"] {
+        background-color: #F5F5F5;
+        border-right: 2px solid #E0E0E0;
+    }
+
+    /* Headers */
+    h1, h2, h3, h4 {
+        color: #FF4B4B;
+        font-weight: 600;
+    }
+
+    /* Buttons */
+    button[data-testid="baseButton-secondary"] {
+        background-color: #FF4B4B !important;
+        color: white !important;
+        border-radius: 8px !important;
+        border: none !important;
+    }
+    button[data-testid="baseButton-secondary"]:hover {
+        background-color: #E04343 !important;
+    }
+
+    /* Download Button */
+    div.stDownloadButton > button {
+        background-color: #FF4B4B;
+        color: white;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+    div.stDownloadButton > button:hover {
+        background-color: #E04343;
+    }
+
+    /* Dataframes */
+    .stDataFrame {
+        border-radius: 10px !important;
+    }
+
+    /* Expander */
+    .streamlit-expanderHeader {
+        background-color: #fafafa !important;
+        font-weight: 600;
+    }
+
+    /* Metrics */
+    [data-testid="stMetricValue"] {
+        color: #FF4B4B;
+        font-weight: 700;
+    }
+
+    /* Footer */
+    footer {
+        visibility: hidden;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 # ---------------- SIDEBAR ----------------
 st.sidebar.title("⚙️ Controls")
@@ -86,24 +132,24 @@ if uploaded_file:
     if chart_type == "Scatter Plot":
         x = st.selectbox("X-axis", numeric_cols)
         y = st.selectbox("Y-axis", numeric_cols)
-        sns.scatterplot(data=df, x=x, y=y, ax=ax)
+        sns.scatterplot(data=df, x=x, y=y, ax=ax, color="#FF4B4B")
 
     elif chart_type == "Line Chart":
         x = st.selectbox("X-axis", all_cols)
         y = st.selectbox("Y-axis", numeric_cols)
-        sns.lineplot(data=df, x=x, y=y, ax=ax)
+        sns.lineplot(data=df, x=x, y=y, ax=ax, color="#FF4B4B")
 
     elif chart_type == "Histogram":
         column = st.selectbox("Select Column", numeric_cols)
-        sns.histplot(df[column], kde=True, ax=ax)
+        sns.histplot(df[column], kde=True, ax=ax, color="#FF4B4B")
 
     elif chart_type == "Box Plot":
         column = st.selectbox("Select Column", numeric_cols)
-        sns.boxplot(data=df, y=column, ax=ax)
+        sns.boxplot(data=df, y=column, ax=ax, color="#FF4B4B")
 
     elif chart_type == "Count Plot":
         column = st.selectbox("Select Column", all_cols)
-        sns.countplot(data=df, x=column, ax=ax)
+        sns.countplot(data=df, x=column, ax=ax, color="#FF4B4B")
         plt.xticks(rotation=45)
 
     elif chart_type == "Correlation Heatmap":
@@ -135,5 +181,9 @@ if uploaded_file:
 else:
     st.info("👆 Upload a CSV or Excel file to get started.")
 
-st.write("By : Manan Chawla ")
-st.write("Thanks for using Smart Data Visualizer tool ")
+st.markdown("""
+---
+<p style='text-align:center; color:#FF4B4B; font-weight:600;'>
+Made with ❤️ by <b>Manan Chawla</b> <br> Smart Data Visualizer v2.0
+</p>
+""", unsafe_allow_html=True)
